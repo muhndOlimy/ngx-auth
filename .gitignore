@@ -44,3 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Demo app for testing the library
+projects/ngx-auth-demo
