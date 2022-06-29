@@ -1,0 +1,9 @@
+{
+    "name": "login",
+    "ngPackage": {
+      "lib": {
+        "entryFile": "public-api.ts"
+      }
+    },
+    "peerDependencies": {}
+}
