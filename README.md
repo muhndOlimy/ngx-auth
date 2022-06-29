@@ -7,7 +7,7 @@ ngx-auth is an angular package for authentication.
 
 ### Login entry point
 
-```http
+```
   import { loginService } from "ngx-auth/login";
 ```
 
