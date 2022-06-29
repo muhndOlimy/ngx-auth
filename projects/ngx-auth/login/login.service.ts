@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { API_URL } from "../demo-config";
-
+import { UserService , API_URL} from 'ngx-auth';
 
 interface LoginData{
   login:string
@@ -13,10 +12,11 @@ interface LoginData{
 })
 export class LoginService {
 
-  constructor(private _http:HttpClient ) { }
+
+  constructor(private _http:HttpClient , private _user:UserService) {}
 
   //Create promise to consumer resolve by success message or reject by error.
-  login(data:LoginData):Promise<any>{
+  login(data:LoginData):Promise<string>{
     
     return new Promise((resolve, reject) => {
 
@@ -38,9 +38,18 @@ export class LoginService {
   }
 
   //Handle success login
-  private handleLogin(data){
+  private handleLogin(data):void{
     localStorage.setItem("Token" , data.token)
-    localStorage.setItem("RefreshToken" , data.refreshToken)    
+    localStorage.setItem("RefreshToken" , data.refreshToken)   
+    this._user.currentUser = {
+      id:data.id,
+      username:data.username,
+      email:data.email,
+      phone:data.phone,
+      photoUrl:data.photoUrl,
+      roles:data.roles,
+      additionalData:data.additionalData,
+    };
   }
   
 
