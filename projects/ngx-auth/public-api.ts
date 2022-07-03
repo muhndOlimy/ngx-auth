@@ -12,6 +12,4 @@ export * from "./user/User";
 export * from './verify/verify.module';
 export * from './verify/verify.service';
 
-export * from "./demo-config";
-
 
