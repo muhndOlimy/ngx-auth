@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService , User} from 'ngx-auth';
 
-interface LoginData{
+export interface LoginData{
   login:string
   password:string
 }
