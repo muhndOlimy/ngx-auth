@@ -26,27 +26,37 @@ export class UserService {
 
     if(hasToken && !isExpired){
 
-      await this.getUserData();
+      try{
+        await this.getUserData();
+      }
+      catch{
+        await this.refreshToken();
+        await this.getUserData();
+      }
     
     } else if(hasToken && isExpired) {
 
       try{
         await this.refreshToken();
-        await this.getUserData();
+        await this.getUserData();        
       }
       catch{
-        this.logout()
+        this.logout();
       }
 
     } else{
-      this.logout()
+
+      this.logout();
+
     }  
+
     
   }
 
   //send request by token to get user data
-  async getUserData():Promise<void>{
-    const data:any = await this._http.get(`${this.AuthConfig.API_URL}users/me` , {
+  private async getUserData():Promise<void>{
+    let data:any;
+    data = await this._http.get(`${this.AuthConfig.API_URL}users/me` , {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${this.getToken()}`,
       })
@@ -59,11 +69,12 @@ export class UserService {
       photoUrl:data.photoUrl,
       roles:data.roles,
       additionalData:data.additionalData,
-    }; 
+    };
+ 
   }
 
   //send with saved refresh token to get new acces token
-  private async refreshToken():Promise<void>{
+  async refreshToken():Promise<void>{
     try{
       const data:any = await this._http.post(`${this.AuthConfig.API_URL}users/refresh-token` , {refreshToken:this.getRefreshToken()}).toPromise();
       this.setToken(data.token);
