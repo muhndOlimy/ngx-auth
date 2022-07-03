@@ -20,31 +20,34 @@ export class UserService {
   private async initUserData():Promise<void>{
     const dateNow = new Date().toISOString();
     const expireDate = this.getExpiryDate();
-    const isExpired = dateNow > expireDate;
-    const hasToken = this.getToken();
+    const isExpired = dateNow > expireDate; // check whether token is expired or not
+    const hasToken = this.getToken(); //check is local storage have token
 
 
-    if(hasToken && !isExpired){
+    if(hasToken && !isExpired){ //token is available at local storage and not expired.
 
       try{
+        //get user data.
         await this.getUserData();
       }
       catch{
-        await this.refreshToken();
-        await this.getUserData();
+        //in case user has manipulate the token data in the local storage then it's logout.
+        await this.logout();
       }
     
-    } else if(hasToken && isExpired) {
+    } else if(hasToken && isExpired) { //token is available at local storage but expired.
 
       try{
+        //refresh access token then get user data.
         await this.refreshToken();
         await this.getUserData();        
       }
       catch{
+        //in case of the refresh token is also expired.
         this.logout();
       }
 
-    } else{
+    } else{ // in case there isn't token at local storage.
 
       this.logout();
 
@@ -61,6 +64,8 @@ export class UserService {
         'Authorization': `Bearer ${this.getToken()}`,
       })
     }).toPromise();
+
+    //setting the current user with the response
     this.currentUser = {
       id:data.id,
       username:data.username,

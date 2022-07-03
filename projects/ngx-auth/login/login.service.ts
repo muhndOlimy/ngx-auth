@@ -15,7 +15,7 @@ export class LoginService {
 
   constructor(private _http:HttpClient , private _user:UserService , @Inject("ngx-auth") private AuthConfig:{API_URL:string}) {}
 
-  //Create promise to consumer resolve by success message or reject by error.
+  //Create promise to consumer resolve by login success message or reject by error.
   async login(data:LoginData):Promise<string>{
     
     return new Promise(async (resolve, reject) => {

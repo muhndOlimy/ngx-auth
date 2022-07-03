@@ -24,7 +24,7 @@ export class RegisterService {
     this.getVerifySetting()
   }
 
-  //Create promise to consumer resolve by success message or reject by error.
+  //Create promise to consumer resolve by register success message or reject by error.
   async register(data:RegisterData):Promise<string>{
     
     return new Promise(async (resolve, reject) => {
@@ -44,7 +44,7 @@ export class RegisterService {
     return this._http.post(`${this.AuthConfig.API_URL}users` , data).toPromise();
   }
 
-  //Create promise to consumer resolve by success message or reject by error.
+  //Create promise to consumer resolve by verify success message or reject by error.
   async verify(data:string):Promise<string>{
     return new Promise(async (resolve, reject) => {
 
@@ -63,7 +63,7 @@ export class RegisterService {
     return this._http.post(`${this.AuthConfig.API_URL}users/register-verify` , {token:data}).toPromise();
   }
 
-  //Create promise to consumer resolve by success message or reject by error.
+  //Handle a promise to consumer resolve by update VerifySetting property or reject by error.
   private async getVerifySetting():Promise<void>{
     try{
       let response = await this.processVerifySetting();
@@ -74,7 +74,7 @@ export class RegisterService {
     }
   }
 
-  //Request verify as promise
+  //Request verify Setting as promise
   private processVerifySetting():Promise<any>{
     return this._http.get(`${this.AuthConfig.API_URL}verification-settings`).toPromise();
   }
