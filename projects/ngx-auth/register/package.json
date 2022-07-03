@@ -1,0 +1,9 @@
+{
+    "name": "register",
+    "ngPackage": {
+      "lib": {
+        "entryFile": "public-api.ts"
+      }
+    },
+    "peerDependencies": {}
+}
