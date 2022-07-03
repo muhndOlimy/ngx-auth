@@ -10,4 +10,5 @@ export interface User {
     token?:string
     refreshDate?:string
     refreshToken?:string
+    expiryDate?:string
 }
